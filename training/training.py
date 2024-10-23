@@ -39,5 +39,6 @@ def trainForEmotion(emotion, stories):
 if __name__ == "__main__":
     client = get_osc_client()
     for emotion, stories in emotion_stories.items():
-        input(f"Press enter to start training for {emotion}")
+        print(f"Set the next class in Wekinator")
+        input(f"then press enter to start training for {emotion}")
         trainForEmotion(emotion, stories)

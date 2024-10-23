@@ -13,18 +13,16 @@ def get_story_vector(story):
     return doc.vector
 
 
-def main(send_ip, send_port):
+def main(send_ip, send_port, story):
     # Set up the OSC client
     client = udp_client.SimpleUDPClient(send_ip, send_port)
 
-    test_story = "As soon as I opened the fridge, the rancid smell hit me like a wall. The milk had curdled, and the vegetables had turned to mush in the bottom drawer. The sight and stench made my stomach turn. I gagged as I quickly slammed the fridge door shut, vowing never to let it get this bad again. The sheer disgust was unbearable."
-
-    test_vector = get_story_vector(test_story).tolist()
+    test_vector = get_story_vector(story).tolist()
 
     # Send the test message
     print("Sending message...")
     client.send_message("/sentiment/input", test_vector)
-    print(f"Sent vector: {test_vector}")
+    print(f"Sent vector.")
 
 
 if __name__ == "__main__":
@@ -35,6 +33,13 @@ if __name__ == "__main__":
     parser.add_argument(
         "--port", type=int, default=6448, help="The port to send OSC messages to"
     )
+    parser.add_argument(
+        "--story",
+        type=str,
+        default="",
+        help="The story to convert into a vector and send",
+    )
+
     args = parser.parse_args()
 
-    main(args.ip, args.port)
+    main(args.ip, args.port, args.story)
