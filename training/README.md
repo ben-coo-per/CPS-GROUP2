@@ -13,7 +13,7 @@ To train the model run
 4. When a class finishes sending, you will be prompted to set the next class in Wekinator and continue.
 5. Once all of the data is in Wekinator, click "Train"
 
-### Wekinator class mapping
+### Wekinator Class Mapping
 
 To change the number of classes or change the data, you can update the `stories.py` file in the data dir.
 Joy = 1
@@ -25,7 +25,7 @@ Disgust = 6
 Anger = 7
 Anticipation = 8
 
-# To test outputs
+# Testing Outputs
 
 1. Make sure Wekinator is set to "Running"
 2. Open two terminals and, in the first, run
