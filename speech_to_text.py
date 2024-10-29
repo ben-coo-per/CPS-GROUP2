@@ -1,4 +1,5 @@
-from utils.openai import client
+import os
+from training.utils.openai import client
 
 
 def get_transcription(file_path: str) -> str:
@@ -8,8 +9,6 @@ def get_transcription(file_path: str) -> str:
     )
     return transcription
 
-
-import os
 
 current_dir = os.path.dirname(__file__)
 file_path = os.path.join(current_dir, "Louis.m4a")

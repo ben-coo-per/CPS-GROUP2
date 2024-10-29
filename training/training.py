@@ -1,12 +1,11 @@
 import time
 import spacy
-
+import csv
 import argparse
-
 from pythonosc import udp_client
+import os
 
-from data.stories import emotion_stories
-
+from utils.gui_controller import set_wekinator_model_values
 
 nlp = spacy.load("en_core_web_md")
 
@@ -27,18 +26,35 @@ def get_osc_client():
     return udp_client.SimpleUDPClient(args.ip, args.port)
 
 
-def trainForEmotion(emotion, stories):
+def sendStory(story):
     client = get_osc_client()
-    for i, story in enumerate(stories):
-        story_vector = get_story_vector(story)
-        print(f"sending {emotion} story {i+1}/{len(stories)}")
-        client.send_message("/sentiment/input", story_vector.tolist())
-        time.sleep(1)
+    story_vector = get_story_vector(story["Transcript"])
+    model_values = [
+        int(story["religion_beliefs"]) / 100,
+        int(story["loved_ones"]) / 100,
+        int(story["travel_culture"]) / 100,
+        int(story["achievements_triumph"]) / 100,
+        int(story["hobbies_interests"]) / 100,
+        int(story["aspirations"]) / 100,
+        int(story["cues_of_reassurance"]) / 100,
+    ]
+
+    # set_wekinator_model_values
+    print(f"Setting model values to: {model_values}")
+    set_wekinator_model_values(model_values)
+
+    print(f"sending story...")
+    client.send_message("/sentiment/input", story_vector.tolist())
+    time.sleep(1)
 
 
 if __name__ == "__main__":
     client = get_osc_client()
-    for emotion, stories in emotion_stories.items():
-        print(f"Set the next class in Wekinator")
-        input(f"then press enter to start training for {emotion}")
-        trainForEmotion(emotion, stories)
+    current_dir = os.path.dirname(__file__)
+    training_data_path = os.path.join(current_dir, "data", "stories.csv")
+
+    with open(training_data_path, mode="r") as file:
+        reader = csv.DictReader(file)
+        for story in reader:
+            sendStory(story)
+            time.sleep(1)
