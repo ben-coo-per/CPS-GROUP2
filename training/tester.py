@@ -1,21 +1,13 @@
 # client.py
 
 import argparse
-from pythonosc import udp_client
 
-import spacy
-
-nlp = spacy.load("en_core_web_md")
-
-
-def get_story_vector(story):
-    doc = nlp(story)
-    return doc.vector
+from utils.speech_to_text import get_story_vector
+from utils.wekinator_osc import get_wekinator_input_client
 
 
 def main(send_ip, send_port, story):
-    # Set up the OSC client
-    client = udp_client.SimpleUDPClient(send_ip, send_port)
+    client = get_wekinator_input_client(ip=send_ip, send_port=send_port)
 
     test_vector = get_story_vector(story).tolist()
 

@@ -1,5 +1,12 @@
-import os
-from openai_client import client
+from .openai_client import client
+import spacy
+
+nlp = spacy.load("en_core_web_md")
+
+
+def get_story_vector(story):
+    doc = nlp(story)
+    return doc.vector
 
 
 def get_transcription(file_path: str) -> str:
@@ -8,9 +15,3 @@ def get_transcription(file_path: str) -> str:
         model="whisper-1", file=audio_file, response_format="text"
     )
     return transcription
-
-
-current_dir = os.path.dirname(__file__)
-file_path = os.path.join(current_dir, "Louis.m4a")
-text = get_transcription(file_path)
-print(text)

@@ -9,7 +9,7 @@ To train the model run
    - OUTPUT: 7 outputs, OSC Message is set to `/wek/outputs`
    - Set model type to "Continuous"
 2. Click "Start Recording"
-3. Run `python training.py` and you will be guided through each class.
+3. Run `python -m training.main` and you will be guided through each class.
 4. When a class finishes sending, you will be prompted to set the next class in Wekinator and continue.
 5. Once all of the data is in Wekinator, click "Train"
 
@@ -30,9 +30,9 @@ Optionally, you can rename the wekinator models to match the mappings:
 1. Make sure Wekinator is set to "Running"
 2. Open two terminals and, in the first, run
    ```
-   python listener.py
+   python -m training.listener
    ```
 3. In the second terminal, run
    ```
-   python tester.py --story <YOUR TEST STORY>
+   python -m training.tester --story <YOUR TEST STORY>
    ```

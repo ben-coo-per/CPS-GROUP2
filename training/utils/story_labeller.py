@@ -1,6 +1,6 @@
 import os
 import time
-from openai_client import client
+from utils.openai_client import client
 import json
 import csv
 
@@ -66,7 +66,6 @@ def append_row(src, story, obj, writer):
 
 
 if __name__ == "__main__":
-
     print("Starting the story labeller")
     # Define paths for the CSV files
     stories_csv_path = os.path.join(current_dir, "stories.csv")
