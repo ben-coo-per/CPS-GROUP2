@@ -3,6 +3,8 @@ import spacy
 import csv
 import argparse
 from pythonosc import udp_client
+from tqdm import tqdm
+
 import os
 
 from utils.gui_controller import set_wekinator_model_values
@@ -28,7 +30,7 @@ def get_osc_client():
 
 def sendStory(story):
     client = get_osc_client()
-    story_vector = get_story_vector(story["Transcript"])
+    story_vector = get_story_vector(story["transcript"])
     model_values = [
         int(story["religion_beliefs"]) / 100,
         int(story["loved_ones"]) / 100,
@@ -55,6 +57,6 @@ if __name__ == "__main__":
 
     with open(training_data_path, mode="r") as file:
         reader = csv.DictReader(file)
-        for story in reader:
+        for story in tqdm(reader, desc="Processing"):
             sendStory(story)
-            time.sleep(1)
+            time.sleep(0.1)

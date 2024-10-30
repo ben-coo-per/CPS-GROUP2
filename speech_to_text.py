@@ -1,5 +1,5 @@
 import os
-from training.utils.openai import client
+from openai_client import client
 
 
 def get_transcription(file_path: str) -> str:
