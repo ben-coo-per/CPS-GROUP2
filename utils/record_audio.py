@@ -1,5 +1,3 @@
-# record_audio.py
-
 import pyaudio
 import wave
 import tempfile
