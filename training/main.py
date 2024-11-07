@@ -57,6 +57,7 @@ if __name__ == "__main__":
 
     with open(training_data_path, mode="r") as file:
         reader = csv.DictReader(file)
-        for story in tqdm(reader, desc="Processing"):
+        total_rows = sum(1 for _ in open(training_data_path)) - 1
+        for story in tqdm(reader, total=total_rows):
             sendStory(story)
             time.sleep(0.1)

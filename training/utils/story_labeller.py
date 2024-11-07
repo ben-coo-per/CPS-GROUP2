@@ -3,6 +3,7 @@ import time
 from utils.openai_client import client
 import json
 import csv
+from tqdm import tqdm
 
 current_dir = os.path.dirname(__file__)
 
@@ -25,7 +26,6 @@ You will not include anything in your response besides the dictionary."""
 
 
 def label_story(src, story, writer):
-    print("getting response...")
     response = client.chat.completions.create(
         model="gpt-4o",
         messages=[
@@ -44,9 +44,19 @@ def label_story(src, story, writer):
 
     # Extracting the response content
     json_string = response.choices[0].message.content
-    obj = json.loads(json_string)
-    # Append the result to the CSV
-    append_row(src, story, obj, writer)
+    try:
+        obj = json.loads(json_string)
+        # Append the result to the CSV
+        append_row(src, story, obj, writer)
+
+    except json.JSONDecodeError:
+        print("Error decoding JSON string")
+        print("Trying again...")
+        try:
+            label_story(src, story, writer)
+        except Exception as e:
+            print(f"Error: {e}")
+        return
 
 
 def append_row(src, story, obj, writer):
@@ -96,7 +106,8 @@ if __name__ == "__main__":
         # Read from the input CSV file and process each story
         with open(stories_csv_path, mode="r", newline="") as input_file:
             reader = csv.DictReader(input_file)
-            print('Reading stories from "stories.csv"')
-            for row in reader:
+            print('Labelling stories from "stories.csv"\n\n\n')
+            total_rows = sum(1 for _ in open(stories_csv_path)) - 1
+            for row in tqdm(reader, total=total_rows):
                 label_story(row["Source"], row["Transcript"], writer)
                 time.sleep(1)
