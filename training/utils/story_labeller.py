@@ -22,7 +22,7 @@ with an example structure like:
 {"religion_beliefs": 2, "loved_ones": 4, "travel_culture": 4, 
 "achievements_triumph": 0, "hobbies_interests": 0, "aspirations": 3, 
 "cues_of_reassurance": 1, "practicality_utility": 2}.
-You will not include anything in your response besides the dictionary."""
+You will not include anything in your response besides the json"""
 
 
 def label_story(src, story, writer):
