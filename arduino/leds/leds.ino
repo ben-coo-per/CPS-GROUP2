@@ -24,21 +24,30 @@ CRGB colors[] = {
   CRGB::Silver,    // Achievements_Triumph
   CRGB::Yellow,    // Hobbies_Interests
   CRGB::Orange,    // Aspirations
-  CRGB::Blue, // Cues of Reassurance
+  CRGB::Blue,      // Cues of Reassurance
   CRGB::Brown      // Practicality_Utility
 };
+
+unsigned long lastColorChange = 0;
+const unsigned long colorChangeInterval = 30000;  // 30 seconds
+bool colorsAssigned = false;
+bool messageReceived = false; // Flag to check if the serial message has been received
 
 void setup() {
   FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
   Serial.begin(9600);
-  while (!Serial) {
-    // Wait for serial connection
-  }
+
+  // Turn off all LEDs initially
+  fill_solid(leds, NUM_LEDS, CRGB::Black);
+  FastLED.show();
 }
 
 void loop() {
-  if (Serial.available() > 0) {
-    String inputString = Serial.readStringUntil('\n');  // Read the full message
+  // Check for a serial message and process it
+  // if (Serial.available() > 0) {
+    // String inputString = Serial.readStringUntil('\n');  // Read the full message
+    String inputString = "0,1,1,0,0,1,0,0";  // Read the full message
+
     int selectedColors[8] = {0};  // Array to store parsed values
 
     // Parse the incoming string to populate selectedColors array
@@ -69,17 +78,51 @@ void loop() {
         // Assign color to the current LED group
         for (int i = 0; i < LED_GROUP_SIZE; i++) {
           leds[group * LED_GROUP_SIZE + i] = selectedColor;
+          FastLED.show();
         }
       }
+      colorsAssigned = true;     // Mark colors as assigned
+      messageReceived = true;    // Mark message as received
     } else {
       // If no colors are selected, turn off all LEDs
       fill_solid(leds, NUM_LEDS, CRGB::Black);
+      colorsAssigned = false;
+      messageReceived = false;
+      FastLED.show();
     }
 
-    FastLED.show();
     delay(250);  // Delay to avoid rapid updates
+  // }
+
+  // Only run the rest of the loop if the message has been received
+  if (messageReceived) {
+    // Sequentially turn on LEDs after color assignment
+    if (colorsAssigned) {
+      for (int i = 0; i < NUM_LEDS; i++) {
+        // Turn on each LED in sequence, leaving the previous ones on
+        leds[i] = leds[i]; // Keep the assigned color
+        FastLED.show();
+        delayMicroseconds(200);  // 0.2ms interval between each LED turning on
+      }
+      colorsAssigned = false;  // Reset the flag after the initial turn-on sequence
+    }
+
+    // Check if it's time to reassign colors every 30 seconds
+    if (millis() - lastColorChange >= colorChangeInterval) {
+      lastColorChange = millis();
+
+      // Randomly reassign colors to each LED group
+      for (int group = 0; group < 10; group++) {
+        CRGB newColor = colors[random(8)];  // Choose a new random color
+
+        // Apply the new color to each LED in the group
+        for (int i = 0; i < LED_GROUP_SIZE; i++) {
+          leds[group * LED_GROUP_SIZE + i] = newColor;
+        }
+      }
+      FastLED.show();
+    }
   }
 
-  FastLED.show();
   delay(40);
 }
