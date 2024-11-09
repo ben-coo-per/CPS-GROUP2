@@ -11,6 +11,7 @@ def handle_wekinator_response(_, *args):
     print(f"Received message from Wekinator")
     print(f"Message: {args}")
     theme_dict = get_theme_values_dict(list(args))
+
     print(theme_dict)
 
 
