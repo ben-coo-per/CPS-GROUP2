@@ -1,5 +1,6 @@
 import threading
 
+from utils.arduino_lights import get_boolean_light_array, send_light_array_to_arduino
 from utils.normalize_values import get_theme_values_dict
 from utils.speech_to_text import get_transcription
 from utils.record_audio import record_audio
@@ -11,8 +12,9 @@ def handle_wekinator_response(_, *args):
     print(f"Received message from Wekinator")
     print(f"Message: {args}")
     theme_dict = get_theme_values_dict(list(args))
+    led_array = get_boolean_light_array(theme_dict)
+    send_light_array_to_arduino(led_array)
 
-    print(theme_dict)
 
 
 def start_osc_server():

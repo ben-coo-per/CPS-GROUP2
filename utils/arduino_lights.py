@@ -3,7 +3,7 @@ from typing import List
 import serial
 import serial.tools.list_ports
 
-vis_threshold = 0.2
+vis_threshold = 0.1
 
 
 def get_boolean_light_array(values: dict[str, float]) -> List[int]:
@@ -24,7 +24,7 @@ def send_light_array_to_arduino(light_array: List[int]) -> None:
     # use this to find the correct port
     print("Available ports:")
     print(available_ports)
-    serial_port = available_ports[5]
+    serial_port = available_ports[3]
     print(f"Using port: {serial_port}")
     # Ensure the port is correct (e.g., available_ports[0])
     with serial.Serial(serial_port, 9600, timeout=2) as ser:
