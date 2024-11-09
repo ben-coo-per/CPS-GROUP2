@@ -1,12 +1,10 @@
-# client.py
-
 import argparse
 
 from utils.speech_to_text import get_story_vector
 from utils.wekinator_osc import get_wekinator_input_client
 
 
-def main(send_ip, send_port, story):
+def send_story_to_wekinator(story, send_ip="127.0.0.1", send_port=6448):
     client = get_wekinator_input_client(ip=send_ip, port=send_port)
 
     test_vector = get_story_vector(story).tolist()
@@ -34,4 +32,4 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    main(args.ip, args.port, args.story)
+    send_story_to_wekinator(args.story, args.ip, args.port)
