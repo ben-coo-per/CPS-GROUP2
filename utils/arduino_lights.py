@@ -1,3 +1,4 @@
+import time
 from typing import List
 import serial
 import serial.tools.list_ports
@@ -23,11 +24,15 @@ def send_light_array_to_arduino(light_array: List[int]) -> None:
     # use this to find the correct port
     print("Available ports:")
     print(available_ports)
-
-    ser = serial.Serial(available_ports[5], 9600)
-    ser.write(bytes(light_array))
-    ser.close()
+    serial_port = available_ports[5]
+    print(f"Using port: {serial_port}")
+    # Ensure the port is correct (e.g., available_ports[0])
+    with serial.Serial(serial_port, 9600, timeout=2) as ser:
+        time.sleep(2)  # Wait for the connection to stabilize
+        message = ",".join(map(str, light_array)) + "\n"
+        ser.write(message.encode())
+        print("Data sent")
 
 
 if __name__ == "__main__":
-    send_light_array_to_arduino([1, 0, 1, 0, 1, 0, 1, 0])
+    send_light_array_to_arduino([1, 0, 0, 0, 0, 0, 0, 0])
