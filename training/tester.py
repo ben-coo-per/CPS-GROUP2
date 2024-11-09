@@ -7,7 +7,7 @@ from utils.wekinator_osc import get_wekinator_input_client
 
 
 def main(send_ip, send_port, story):
-    client = get_wekinator_input_client(ip=send_ip, send_port=send_port)
+    client = get_wekinator_input_client(ip=send_ip, port=send_port)
 
     test_vector = get_story_vector(story).tolist()
 

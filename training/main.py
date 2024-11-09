@@ -7,7 +7,7 @@ from tqdm import tqdm
 
 import os
 
-from utils.gui_controller import set_wekinator_model_values
+from training.utils.gui_controller import set_wekinator_model_values
 
 nlp = spacy.load("en_core_web_md")
 
@@ -32,13 +32,14 @@ def sendStory(story):
     client = get_osc_client()
     story_vector = get_story_vector(story["transcript"])
     model_values = [
-        int(story["religion_beliefs"]) / 100,
-        int(story["loved_ones"]) / 100,
-        int(story["travel_culture"]) / 100,
-        int(story["achievements_triumph"]) / 100,
-        int(story["hobbies_interests"]) / 100,
-        int(story["aspirations"]) / 100,
-        int(story["cues_of_reassurance"]) / 100,
+        int(story["religion_beliefs"])/10,
+        int(story["loved_ones"])/10,
+        int(story["travel_culture"])/10,
+        int(story["achievements_triumph"])/10,
+        int(story["hobbies_interests"])/10,
+        int(story["aspirations"])/10,
+        int(story["cues_of_reassurance"])/10,
+        int(story["practicality_utility"])/10,
     ]
 
     # set_wekinator_model_values

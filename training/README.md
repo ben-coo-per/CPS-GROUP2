@@ -6,7 +6,7 @@ To train the model run
 1. Create a new Wekinator project with the following settings:
    - Port is set to `6448` (alternatively, you can tell the python script to target a different port in a future step)
    - INPUT: 300 inputs with the OSC message set to `/sentiment/input`
-   - OUTPUT: 7 outputs, OSC Message is set to `/wek/outputs`
+   - OUTPUT: 8 outputs, OSC Message is set to `/wek/outputs`
    - Set model type to "Continuous"
 2. Click "Start Recording"
 3. Run `python -m training.main` and you will be guided through each class.
