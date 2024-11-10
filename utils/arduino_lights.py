@@ -24,7 +24,7 @@ def send_light_array_to_arduino(light_array: List[int]) -> None:
     # use this to find the correct port
     print("Available ports:")
     print(available_ports)
-    serial_port = available_ports[3]
+    serial_port = available_ports[5]
     print(f"Using port: {serial_port}")
     # Ensure the port is correct (e.g., available_ports[0])
     with serial.Serial(serial_port, 9600, timeout=2) as ser:
@@ -35,4 +35,4 @@ def send_light_array_to_arduino(light_array: List[int]) -> None:
 
 
 if __name__ == "__main__":
-    send_light_array_to_arduino([1, 0, 0, 0, 0, 0, 0, 0])
+    send_light_array_to_arduino([1, 0, 0, 1, 0, 1, 0, 1])

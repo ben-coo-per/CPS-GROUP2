@@ -17,6 +17,8 @@ CRGB colors[] = {
   CRGB::Brown    // Practicality_Utility
 };
 
+
+
 void setup() {
   FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
   FastLED.setMaxPowerInVoltsAndMilliamps(5, 500);  // Set max power for safety
@@ -26,22 +28,20 @@ void setup() {
   FastLED.show();
 }
 
+int selectedColors[8] = { 0 };
+
 void loop() {
-  // For now, we're just simulating the serial message, but uncomment this to get the actual message from python
-  // if (Serial.available() > 0) {
-  // String inputString = Serial.readStringUntil('\n');  // Read the full message
-
-
-  // Simulate a received serial message
-  String inputString = "1,1,1,0,1,1,0,0";  // Test message
-  int selectedColors[8] = { 0 };
-  int index = 0;
-  char *token = strtok((char *)inputString.c_str(), ",");
-  while (token != NULL && index < 8) {
-    selectedColors[index] = atoi(token);
-    token = strtok(NULL, ",");
-    index++;
+  if (Serial.available() > 0) {
+    String inputString = Serial.readStringUntil('\n');  // Read the full message
+    int index = 0;
+    char *token = strtok((char *)inputString.c_str(), ",");
+    while (token != NULL && index < 8) {
+      selectedColors[index] = atoi(token);
+      token = strtok(NULL, ",");
+      index++;
+    }
   }
+
 
   // Build an array of only the selected colors
   CRGB availableColors[8];
