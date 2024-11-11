@@ -17,7 +17,6 @@ CRGB colors[] = {
 
 int selectedColors[8] = { 0 };
 
-// Set up LEDs
 void setupLEDs() {
     FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
     FastLED.setMaxPowerInVoltsAndMilliamps(5, 500);  // Set max power for safety

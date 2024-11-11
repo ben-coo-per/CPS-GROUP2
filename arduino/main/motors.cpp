@@ -1,6 +1,13 @@
 #include "motors.h"
-#include "pins.h"
 #include <Arduino.h>
+
+void setupMotor() {
+  pinMode(IN1, OUTPUT);
+  pinMode(IN2, OUTPUT);
+  pinMode(ENA, OUTPUT);
+
+  digitalWrite(ENA, HIGH);  // Enable motor
+}
 
 void rampUpRampDown() {
     static int pwmValue = 150;  // Start with a higher initial value to jump-start the motor
