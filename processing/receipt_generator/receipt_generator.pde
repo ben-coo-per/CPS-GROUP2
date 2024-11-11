@@ -138,7 +138,7 @@ void oscEvent(OscMessage msg) {
 
         updateValues(data);
         delay(1000);
-        saveAndPrintImage();
+        saveImage();
     }
 }
 
@@ -201,41 +201,7 @@ int getHighestValueIndex() {
     return highestIndex;
 }
 
-void saveAndPrintImage() {
-    String fileName = "output_" + year() + nf(month(), 2) + nf(day(), 2) + "_" + count + ".jpg"; // Save as JPEG
+void saveImage() {
+    String fileName = "output";
     save(fileName); 
-    
-    //try {
-    //    FileInputStream fis = new FileInputStream(fileName);
-    //    DocFlavor flavor = DocFlavor.INPUT_STREAM.JPEG; // Use JPEG format
-    //    Doc myDoc = new SimpleDoc(fis, flavor, null);
-
-    //    PrintRequestAttributeSet aset = new HashPrintRequestAttributeSet();
-    //    aset.add(new Copies(1)); 
-    //    aset.add(PrintQuality.HIGH);
-
-    //    // Find the printer named "POS-58"
-    //    PrintService[] services = PrintServiceLookup.lookupPrintServices(flavor, aset);
-    //    PrintService posPrinter = null;
-
-    //    for (PrintService service : services) {
-    //        if (service.getName().equals("POS-58")) {
-    //            posPrinter = service;
-    //            break;
-    //        }
-    //    }
-
-    //    if (posPrinter != null) {
-    //        DocPrintJob job = posPrinter.createPrintJob();
-    //        job.print(myDoc, aset);
-    //        println("Image saved as " + fileName + " and sent to POS-58 printer.");
-    //    } else {
-    //        println("Printer 'POS-58' not found.");
-    //    }
-        
-    //    fis.close();
-    //} catch (Exception e) {
-    //    e.printStackTrace();
-    //    println("Failed to print image.");
-    //}
 }
