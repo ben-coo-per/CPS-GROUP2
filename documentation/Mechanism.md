@@ -24,3 +24,16 @@ The shaft that holds the Cams is hexagonal so that the cams can each be offset b
 
 # Material Choice
 We chose to use transparent acrylic for laser-cutting the cams, ripple rings, and dowels to evoke the effect of water droplets. The transparency also enhances the refractive quality of the LED lights soldered onto the interior walls, allowing the light to shine through more vividly. We painted the laser-cut exterior walls white to further reflect and amplify the LED lighting effect. Most parts, including the motor bracket and gears, are 3D-printed with PLA, a material stiff enough to ensure proper connection and smooth gear rotation. For the cam shaft, we opted for metal to provide added stability to the entire mechanical structure.
+
+---
+### Manufacturing Process
+![manuf01](https://github.com/user-attachments/assets/1726dc3e-2a26-4de7-b8cb-baf85a47d5ae)
+In implementing the physical robot, we carefully selected different materials. Initially, we experimented with laser-cut ripple rings using birch wood, but due to the opaque nature of wood, we decided to switch to transparent acrylic. This change, along with painting the exterior walls white, allows the LED light to shine through more effectively, enhancing the visual experience for participants and highlighting the interaction with the robot.
+![manu02](https://github.com/user-attachments/assets/2f94e261-d9cc-4ae0-ad36-1b43967a15d4)
+During the production process, we encountered some design errors, so ultimately, to improve precision and save time and materials, we chose to use 3D printing instead of wood. We also continually tested the LED effects and refined the material design to enhance overall stability and light transmission, ensuring that our final design concept was effectively realized.
+
+---
+#### LED Testing Process
+https://github.com/user-attachments/assets/97cc142e-ad6d-4269-a75b-38898aa3d520
+
+
