@@ -1,33 +1,25 @@
 #include "motors.h"
 #include "ledControl.h"
+#include "buttonControl.h"
+#include "serialComm.h"
+#include "appState.h" // Include the appState definitions
 
-// Define app states
-enum AppState {
-    Idle = 0,
-    Recording = 1,
-    Playback = 2
-};
-
-AppState appState = Idle; // Initial app state
-
-String LEDLightInputString = ""; // String to hold the LED light input
+AppState appState = Idle; // Define the main appState variable here
+String lightPattern = "";
 
 void setup() {
     Serial.begin(9600);
     setupMotor();
     setupLEDs();
+    setupButton();
+    setupSerial(); // Initialize serial communication
 }
 
 void loop() {
-    // Check for a serial message
-    if (Serial.available() > 0) {
-        LEDLightInputString = Serial.readStringUntil('\n'); // Read the full message
+    checkButton();      // Check button state changes
+    checkSerialInput(); // Check for serial messages to update app state
 
-        // Set the app state to Playback and update LEDs
-        updateLEDs(LEDLightInputString);
-        appState = Playback;
-    }
-
+    // Perform actions based on app state
     switch (appState) {
         case Idle:
             warmGlowEffect();
@@ -38,7 +30,8 @@ void loop() {
             break;
 
         case Playback:
-            updateLEDs(LEDLightInputString);
+            delay(100);
+            updateLEDs(lightPattern);
             break;
     }
 }
